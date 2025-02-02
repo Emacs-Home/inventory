@@ -1,0 +1,376 @@
+This is inventory.info, produced by makeinfo version 7.2 from
+inventory.texi.
+
+This manual is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License.
+INFO-DIR-SECTION Emacs
+START-INFO-DIR-ENTRY
+* Magit: (magit).       Using Git from Emacs with Magit.
+END-INFO-DIR-ENTRY
+
+
+File: inventory.info,  Node: Top,  Next: Installation,  Prev: (dir),  Up: (dir)
+
+1 Inventory Management in Org Mode
+**********************************
+
+1.1 Introduction
+================
+
+Inventory Management in Org Mode is an Emacs package designed to help
+you keep track of household items such as groceries, medications, and
+other consumables.  By leveraging Emacs' powerful Org Mode, this package
+provides an organized and easily customizable system for managing your
+inventory.
+
+1.2 Features
+============
+
+   • Add new main categories (e.g., Groceries, Medication).
+   • Add new items under existing categories with specified minimum and
+     maximum stock levels.
+   • Update current stock counts for any item.
+   • Automatically check and alert for items that are at or below their
+     minimum stock levels.
+   • Customize the path to your inventory Org file through Emacs'
+     Customize interface.
+   • Integration with Emacs' Customize system for flexible
+     configuration.
+
+* Menu:
+
+* Installation::
+* Usage::
+* Customization::
+* Example::
+* Troubleshooting::
+* License::
+* Acknowledgments::
+
+
+File: inventory.info,  Node: Installation,  Next: Usage,  Prev: Top,  Up: Top
+
+1.3 Installation
+================
+
+To install the Inventory Management package, follow these steps:
+
+  1. 2. **Download the Package**: Save the provided Elisp code to a
+     file named 'inventory-management.el' in your Emacs load path, for
+     example, '~/.emacs.d/lisp/'.
+
+  3. **Load the Package**: Add the following line to your Emacs
+     initialization file ('~/.emacs' or '~/.emacs.d/init.el'):
+
+          (load "/path/to/inventory-management.el")
+
+     Replace '"/path/to/inventory-management.el"' with the actual path
+     to the 'inventory-management.el' file.
+
+  4. **Customize the Inventory Org File Path**: Use Emacs' Customize
+     interface to set the path to your inventory Org file.
+
+     Steps to customize:
+       1. 2. Press 'M-x', type 'customize-group', and press
+          'Enter'.
+       3. When prompted, enter 'my-inventory' and press 'Enter'.
+       4. Locate the **My Inventory Org File** option.
+       5. Click on the 'Set' button next to **My Inventory Org File**.
+       6. Enter the full path to your inventory Org file (e.g.,
+          '~/Documents/inventory.org') and confirm.
+       7. Click **Apply and Save** to persist the setting.
+       8. **Restart Emacs**: Restart Emacs to ensure all changes take
+          effect.
+
+
+File: inventory.info,  Node: Usage,  Next: Customization,  Prev: Installation,  Up: Top
+
+1.4 Usage
+=========
+
+Once installed and configured, you can use the provided functions to
+manage your inventory effectively.
+
+1.4.1 Adding a New Main Category
+--------------------------------
+
+To add a new main category:
+
+  1. 2. Invoke the function:
+          M-x my-inventory-add-new-main-category
+
+  3. Enter the required details when prompted:
+        • **Main category name**: e.g., 'Groceries'
+        • **Minimum stock level**: e.g., '2'
+        • **Maximum stock level**: e.g., '5'
+        • **Initial stock count for the first item**: e.g., '0'
+
+  4. The new category along with a default item will be added to your
+     inventory Org file.
+  5. Example Entry:
+     * Groceries
+     ** Default Item
+        :PROPERTIES:
+        :MINIMUM: 2
+        :MAX_STOCK: 5
+        :END:
+     - Current stock: 0
+
+1.4.2 Adding a New Item to an Existing Category
+-----------------------------------------------
+
+To add a new item under an existing main category:
+
+  1. 2. Invoke the function:
+          M-x my-inventory-add-new-item
+
+  3. Enter the required details when prompted:
+        • **Main category name**: e.g., 'Groceries'
+        • **Item name**: e.g., 'Milk'
+        • **Minimum stock level**: e.g., '2'
+        • **Maximum stock level**: e.g., '5'
+        • **Initial stock count**: e.g., '0'
+
+  4. The new item will be added under the specified main category in
+     your inventory Org file.
+  5. Example Entry:
+     ** Milk
+        :PROPERTIES:
+        :MINIMUM: 2
+        :MAX_STOCK: 5
+        :END:
+     - Current stock: 0
+
+1.4.3 Updating Stock Counts
+---------------------------
+
+To update the current stock count of an existing item:
+
+  1. 2. Invoke the function:
+          M-x my-inventory-update-stock-count
+
+  3. Enter the required details when prompted:
+        • **Main category name**: e.g., 'Groceries'
+        • **Item name to update**: e.g., 'Milk'
+        • **New stock count**: e.g., '3'
+
+  4. The current stock count for the specified item will be updated in
+     your inventory Org file.
+  5. Example Update:
+     ** Milk
+        :PROPERTIES:
+        :MINIMUM: 2
+        :MAX_STOCK: 5
+        :END:
+     - Current stock: 3
+
+1.4.4 Checking Stock Levels
+---------------------------
+
+To check all stock levels and view alerts for low-stock items:
+
+  1. 2. Invoke the function:
+          M-x my-inventory-check-stock-levels
+
+  3. A temporary buffer named ‘*Stock Alerts*’ will display all items
+     that are at or below their minimum stock levels.
+
+  4. If all stock levels are above their minimums, you will see a
+     message:
+     All stock levels are above their minimums.
+
+1.4.5 Example Org File Structure
+--------------------------------
+
+Ensure your 'inventory.org' file follows this hierarchical structure:
+
+* Groceries
+** Milk
+   :PROPERTIES:
+   :MINIMUM: 2
+   :MAX_STOCK: 5
+   :END:
+- Current stock: 3
+
+** Bread
+   :PROPERTIES:
+   :MINIMUM: 1
+   :MAX_STOCK: 3
+   :END:
+- Current stock: 1
+
+* Medication
+** Painkillers
+   :PROPERTIES:
+   :MINIMUM: 1
+   :MAX_STOCK: 6
+   :END:
+- Current stock: 4
+
+* Toiletries
+** Shampoo
+   :PROPERTIES:
+   :MINIMUM: 3
+   :MAX_STOCK: 10
+   :END:
+- Current stock: 2
+
+
+File: inventory.info,  Node: Customization,  Next: Example,  Prev: Usage,  Up: Top
+
+1.5 Customization
+=================
+
+The package provides a customizable variable to specify the path to your
+inventory Org file.  This allows flexibility in managing multiple
+inventories or relocating your Org file as needed.
+
+     M-x customize-group RET my-inventory RET
+
+1.5.1 Setting the Inventory Org File Path
+-----------------------------------------
+
+Follow these steps to set or change the inventory Org file path:
+
+  1. 2. Press 'M-x', type 'customize-group', and press 'Enter'.
+  3. When prompted, enter 'my-inventory' and press 'Enter'.
+  4. Locate the **My Inventory Org File** option.
+  5. Click on the 'Set' button next to **My Inventory Org File**.
+  6. Browse and select your desired Org file (e.g.,
+     '~/Documents/inventory.org').
+  7. Click **Apply and Save** to persist the setting.
+
+1.5.2 Editing the Customization Variable Manually
+-------------------------------------------------
+
+Alternatively, you can set the variable directly in your Emacs
+configuration:
+
+     (setq my-inventory-org-file "~/Documents/inventory.org")
+
+
+File: inventory.info,  Node: Example,  Next: Troubleshooting,  Prev: Customization,  Up: Top
+
+1.6 Example
+===========
+
+Here’s an example of how your 'inventory.org' file might look after
+adding categories and items:
+
+* Groceries
+** Milk
+   :PROPERTIES:
+   :MINIMUM: 2
+   :MAX_STOCK: 5
+   :END:
+- Current stock: 3
+
+** Bread
+   :PROPERTIES:
+   :MINIMUM: 1
+   :MAX_STOCK: 3
+   :END:
+- Current stock: 1
+
+** Eggs
+   :PROPERTIES:
+   :MINIMUM: 6
+   :MAX_STOCK: 12
+   :END:
+- Current stock: 8
+
+* Medication
+** Painkillers
+   :PROPERTIES:
+   :MINIMUM: 1
+   :MAX_STOCK: 6
+   :END:
+- Current stock: 4
+
+* Toiletries
+** Shampoo
+   :PROPERTIES:
+   :MINIMUM: 3
+   :MAX_STOCK: 10
+   :END:
+- Current stock: 2
+
+
+File: inventory.info,  Node: Troubleshooting,  Next: License,  Prev: Example,  Up: Top
+
+1.7 Troubleshooting
+===================
+
+   • **Function Not Found**: Ensure that the 'inventory-management.el'
+     file is correctly loaded in your Emacs configuration and that
+     you've restarted Emacs or evaluated the buffer after making
+     changes.
+
+   • **Incorrect Org File Structure**: The Elisp functions rely on a
+     specific structure within the Org file.  Ensure that each main
+     category and item follows the format:
+          * Main Category
+          ** Item
+             :PROPERTIES:
+             :MINIMUM: X
+             :MAX_STOCK: Y
+             :END:
+          - Current stock: Z
+
+   • **Variable Not Set**: Verify that 'my-inventory-org-file' is
+     correctly set through the Customize interface and points to a valid
+     Org file.
+
+   • **Permissions Issues**: Ensure that you have the necessary write
+     permissions for the Org file to allow the Elisp functions to modify
+     it.
+
+   • **Eval Buffers**: After modifying 'inventory-management.el', ensure
+     you evaluate the buffer using 'M-x eval-buffer' or restart Emacs to
+     load the latest changes.
+
+   • **Error Messages**: Pay attention to error messages in the
+     '*Messages*' buffer.  They often provide insights into what went
+     wrong.
+
+
+File: inventory.info,  Node: License,  Next: Acknowledgments,  Prev: Troubleshooting,  Up: Top
+
+1.8 License
+===========
+
+This Inventory Management package is released under the GNU General
+Public License.  You are free to redistribute and/or modify it under the
+terms of the GPL as published by the Free Software Foundation.
+
+
+File: inventory.info,  Node: Acknowledgments,  Prev: License,  Up: Top
+
+1.9 Acknowledgments
+===================
+
+Thanks to the Emacs and Org Mode communities for their continuous
+support and development, enabling powerful customization and scripting
+capabilities.
+
+
+File: inventory.info,  Node: End
+
+
+Tag Table:
+Node: Top322
+Node: Installation1442
+Node: Usage2783
+Node: Customization6032
+Node: Example7169
+Node: Troubleshooting7866
+Node: License9210
+Node: Acknowledgments9538
+Node: End9805
+
+End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:
